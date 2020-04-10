@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+
+    <title>Calling System</title>
+
+    <!-- <link rel='stylesheet' href='style.css'> -->
+
+    <!-- <link rel="stylesheet" href='./vendor/bootstrap/bootstrap.min.css'>
+    <script src='./vendor/jquery/jquery-3.4.1.slim.min.js'></script>
+    <script src='./vendor/popper/popper.min.js'></script>
+    <script src='./vendor/bootstrap/bootstrap.min.js'></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- font style -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,900&display=swap&subset=chinese-traditional" rel="stylesheet">
+
+    <script type='text/javascript'>
+        var speechSynthesis = window.speechSynthesis;
+
+        function loadVoices(u) {
+            var voices = speechSynthesis.getVoices();
+            for (let index = 0; index < voices.length; index++) {
+                /*
+                'Google US English'
+                'Google 日本語'
+                'Google 普通话（中国大陆）'
+                'Google 粤語（香港）'
+                'Google 國語（臺灣）'
+                */
+
+                //console.log(this.voices[index].name);
+                if (voices[index].name == 'Google 國語（臺灣）') {
+                    //要使用Google中文語音的話請不要再用u.lang指定語言
+                    //不然可能又會被切回系統預設的中文語音
+                    u.voice = voices[index];
+                    return u;
+                }
+            }
+            //如果沒有則使用預設中文語音
+            u.lang = 'zh-TW';
+            return u;
+        }
+
+        function speak(text) {
+            var utterance = new window.SpeechSynthesisUtterance();
+            utterance.text = text;
+            utterance = loadVoices(utterance);
+            utterance.volume = document.getElementById('volume').value;
+            utterance.rate = 1; // document.getElementById('rate').value;
+            speechSynthesis.speak(utterance);
+        }
+
+        function start(table) {
+            stop();
+
+            if (table) {
+                document.getElementById('current_number').value = parseInt(document.getElementById('current_number').value) + 1;
+                var current_number = document.getElementById('current_number').value;
+                var text = '請' + current_number + '號來賓到第' + table + '號櫃台';
+                document.getElementById('current_state').innerHTML = text;
+                document.getElementById(table.toString()).innerHTML = current_number;
+                speak(text);
+            } else {
+                var current_state = document.getElementById('current_state').innerHTML;
+                speak(current_state);
+            }
+
+
+
+        }
+
+        function stop() {
+            speechSynthesis.cancel();
+        }
+
+        function setZero() {
+            var result = confirm('真的要歸零嗎?_?');
+            if (result == true) {
+                document.getElementById('current_state').innerHTML = '尚未開始，請稍等候';
+                var i;
+                for (i = 1; i < 9; i++) {
+                    document.getElementById(i.toString()).innerHTML = '0';
+                }
+
+            }
+        }
+
+        function interrupt() {
+            var inter_number = document.getElementById('inter_number').value;
+            var inter_table = document.getElementById('inter_table').value;
+            var text = '請' + inter_number + '號來賓到第' + inter_table + '號櫃台';
+            document.getElementById('current_state').innerHTML = text;
+            speak(text);
+        }
+
+        function showTime() {
+            var NowDate = new Date();
+            var h = NowDate.getHours();
+            var m = NowDate.getMinutes();
+            var s = NowDate.getSeconds();
+            document.getElementById('showbox').innerHTML = h + '時' + m + '分' + s + '秒';
+            setTimeout('showTime()', 1000);
+        }
+    </script>
+    <style>
+        /* .col {
+            border: 1px solid black;
+        } */
+        body {
+            background-color: Azure;
+        }
+
+        .RedText {
+            color: red;
+        }
+
+        .PurpleText {
+            color: purple;
+        }
+
+        .col-2>button,
+        .col-3>button {
+            font-weight: 900;
+            font-size: 50px;
+            font-family: 'Noto Sans TC', serif;
+        }
+    </style>
+
+</head>
+
+<body onload="showTime()">
+    <div class='container'>
+        <div class="row">
+            <div class="col align-self-center">
+                <h1 class="text-center" style="font-family: 'Noto Sans TC', serif; font-weight: 900; color: #ffd700; ">109學年度基北區高級中等學校免試入學報名作業</h1>
+                <input id='current_number' type='hidden' class='txt' value='0' readonly='readonly'>
+            </div>
+        </div>
+        <div class="row mt-md-2">
+            <div class="col " style="font-family: 'Noto Sans TC', serif; font-weight: 400; font-size: 20px ">
+                <div class='RedText'>當前號碼與櫃台： <span id='current_state' class='PurpleText'> 尚未開始，請稍等候 </span> </div>
+            </div>
+            <div class="col">
+                <div id="showbox" class="text-right"></div>
+            </div>
+        </div>
+        <div class="row  mt-3">
+            <div class="col-2">
+                <div id='t1'>一號櫃台</div>
+                <br>
+                <button id='1' class='btn btn-success btn-lg btn-block' onclick='start(1)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t2'>二號櫃台</div><br>
+                <button id='2' class='btn btn-primary btn-lg btn-block' onclick='start(2)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t3'>三號櫃台</div><br>
+                <button id='3' class='btn btn-success btn-lg btn-block' onclick='start(3)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t4'>四號櫃台</div><br>
+                <button id='4' class='btn btn-primary btn-lg btn-block' onclick='start(4)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t5'>五號櫃台</div><br>
+                <button id='5' class='btn btn-success btn-lg btn-block' onclick='start(5)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t6'>六號櫃台</div><br>
+                <button id='6' class='btn btn-primary btn-lg btn-block' onclick='start(6)'>0</button>
+            </div>
+        </div>
+        <div class="row justify-content-around  mt-3">
+            <div class="col-3">
+                <div id='t7' class="text-center">特七號櫃台</div><br>
+                <button id='7' class='btn btn-success btn-lg btn-block' onclick='start(7)'>0</button>
+            </div>
+            <div class="col-3 ">
+                <div id='t8' class="text-center">特八號櫃台</div><br>
+                <button id='8' class='btn btn-primary btn-lg btn-block' onclick='start(8)'>0</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="text-right">台北市立景美女中 設計製作</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                緊急插播：號碼 <input id='inter_number' type='text' maxlength="3" size="3" /> 櫃台 <input id='inter_table' type='text' maxlength="3" size="3" />
+                <button onclick='interrupt()'>播放</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <input type='button' value='重新播放' onclick='start(0);' />
+                <input type='button' value='停止播放' onclick='stop();' />
+                <input type='button' value='上一號' onclick=';' />
+            </div>
+
+        </div>
+        <div class="row mt-3">
+            <div class="col ">
+                <button onclick='setZero();'>數字歸零</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
