@@ -1,0 +1,4 @@
+# 檔案名稱 .gitignore
+
+# 忽略 very_old_calling_system 資料夾 與該資料夾其下所有檔案
+very_old_calling_system/
