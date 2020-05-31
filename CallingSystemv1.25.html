@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<!-- v1.2改版
-   - 1. 當前號碼與櫃台 大一點
-   - 2. 七號 八號 號碼分開顯示 顏色換掉褐色換行換下面一點
-   - 3. 兩組播放暫停
-   - 4. 上一號 暫時不用 -->
+<!-- v1.25改版
+   - 1. 時鐘縮小
+   - 2. 1~6號櫃台插入3位數字時，會有顯示問題
+   - 3. 數字歸零後，7~8號櫃台初始化數字之設定
+ -->
 
 <head>
     <meta charset='utf-8'>
@@ -65,6 +65,7 @@
             if (result == true) {
                 document.getElementById('current_state').innerHTML = '尚未開始，請稍等候';
                 document.getElementById('current_number').value = '0';
+                document.getElementById('current_number2').value = '500';
                 var i;
                 for (i = 1; i < 9; i++) {
                     document.getElementById(i.toString()).innerHTML = '0';
@@ -153,11 +154,11 @@
             </div>
         </div>
         <div class="row mt-md-4">
-            <div class="col col-lg-9" style="font-family: 'Noto Sans TC', serif; font-weight: 400; font-size: 45px ">
+            <div class="col col-lg-10" style="font-family: 'Noto Sans TC', serif; font-weight: 400; font-size: 45px ">
                 <div class='RedText'>當前號碼與櫃台： <span id='current_state' class='PurpleText'> 尚未開始，請稍等候 </span> </div>
             </div>
             <div class="col">
-                <div id="showbox" class="text-center alert alert-info" role="alert" style="font-size: 20px"></div>
+                <div id="showbox" class="text-center alert alert-info" role="alert" style="font-size: 15px"></div>
             </div>
         </div>
         <br>
