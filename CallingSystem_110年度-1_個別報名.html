@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
-<!-- v1.3改版
-   - 1. 標題 改成黑色 (O)
-   - 2. 一~八號櫃台 -> 一改成阿拉伯數並放大 "號櫃台”改粗體
-   - 3. 1~8號櫃台順序交換 (O)
-   - 4. 要有兩種網頁 1->個別報名 共8個櫃台 2->集體報名 共5個櫃台
-   - 5. 7、8號櫃台 從1001號開始 (O)
-   - 6. 所有櫃台的講話播出 都講2次 (O)
-   - 7. 時鐘樣式更新
+<!-- v1.31 改版
+    對年份、學校名稱進行修改
  -->
 
 <head>
     <meta charset='utf-8'>
 
-    <title>團體報名_叫號系統</title>
+    <title>個別報名_叫號系統</title>
 
     <!-- <link rel='stylesheet' href='style.css'> -->
 
@@ -112,6 +106,8 @@
             speechSynthesis.cancel();
         }
 
+
+
         // function showTime() {
         //     var NowDate = new Date();
         //     var h = NowDate.getHours();
@@ -137,7 +133,8 @@
             color: purple;
         }
 
-        button.isstrong {
+        .col-2>button,
+        .col-3>button {
             font-weight: 900;
             font-size: 50px;
             font-family: 'Noto Sans TC', serif;
@@ -150,7 +147,7 @@
     <div class='container'>
         <div class="row">
             <div class="col align-self-center">
-                <h1 class="text-center" style="font-family: 'Noto Sans TC', serif; font-weight: 900; color: #050505; ">109學年度基北區高級中等學校免試入學報名作業</h1>
+                <h1 class="text-center" style="font-family: 'Noto Sans TC', serif; font-weight: 900; color: #050505; ">110學年度基北區高級中等學校免試入學報名作業</h1>
                 <input id='current_number' type='hidden' class='txt' value='0' readonly='readonly'><!-- 暫存1~6號櫃台當前號碼 -->
                 <input id='current_number2' type='hidden' class='txt' value='1000' readonly='readonly'><!-- 暫存7~8號櫃台當前號碼 -->
             </div>
@@ -167,47 +164,74 @@
 
         </div>
         <br>
-        <div class="row">
-            <div class="col">
+        <div class="row  mt-3">
+            <div class="col-2">
                 <div id='t1' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">1</div>號櫃台
                     </strong>
                 </div>
                 <br>
-                <button id='1' class='isstrong btn btn-success btn-lg btn-block' onclick='start(1)'>0</button>
+                <button id='1' class='btn btn-success btn-lg btn-block' onclick='start(1)'>0</button>
             </div>
-            <div class="col">
+            <div class="col-2">
                 <div id='t2' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">2</div>號櫃台
                     </strong>
                 </div><br>
-                <button id='2' class='isstrong btn btn-primary btn-lg btn-block' onclick='start(2)'>0</button>
+                <button id='2' class='btn btn-primary btn-lg btn-block' onclick='start(2)'>0</button>
             </div>
-            <div class="col">
+            <div class="col-2">
                 <div id='t3' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">3</div>號櫃台
                     </strong>
                 </div><br>
-                <button id='3' class='isstrong btn btn-success btn-lg btn-block' onclick='start(3)'>0</button>
+                <button id='3' class='btn btn-success btn-lg btn-block' onclick='start(3)'>0</button>
             </div>
-            <div class="col">
+            <div class="col-2">
                 <div id='t4' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">4</div>號櫃台
                     </strong>
                 </div><br>
-                <button id='4' class='isstrong btn btn-primary btn-lg btn-block' onclick='start(4)'>0</button>
+                <button id='4' class='btn btn-primary btn-lg btn-block' onclick='start(4)'>0</button>
             </div>
-            <div class="col">
+            <div class="col-2">
                 <div id='t5' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">5</div>號櫃台
                     </strong>
                 </div><br>
-                <button id='5' class='isstrong btn btn-success btn-lg btn-block' onclick='start(5)'>0</button>
+                <button id='5' class='btn btn-success btn-lg btn-block' onclick='start(5)'>0</button>
+            </div>
+            <div class="col-2">
+                <div id='t6' class="text-center shadow-sm rounded">
+                    <strong>
+                        <div style="font-size:40px; display:inline;">6</div>號櫃台
+                    </strong>
+                </div><br>
+                <button id='6' class='btn btn-primary btn-lg btn-block' onclick='start(6)'>0</button>
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center  mt-3">
+            <div class="col-3">
+                <div id='t7' class="text-center shadow-sm rounded">
+                    <strong>特
+                        <div style="font-size:40px; display:inline;">7</div>號櫃台
+                    </strong>
+                </div><br>
+                <button id='7' class='btn btn-success btn-lg btn-block' style="background-color:#CC7420; color:black;" onclick='start(7)'>0</button>
+            </div>
+            <div class="col-3 ">
+                <div id='t8' class="text-center shadow-sm rounded">
+                    <strong>特
+                        <div style="font-size:40px; display:inline;">8</div>號櫃台
+                    </strong>
+                </div><br>
+                <button id='8' class='btn btn-primary btn-lg btn-block' style="background-color:#CC7420; color:black;" onclick='start(8)'>0</button>
             </div>
         </div>
         <div class="row">
@@ -216,7 +240,7 @@
             </div>
         </div>
         <br><br><br>
-        <div class="row mt-5">
+        <div class="row mt-3">
             <!-- <div class="col">
                  <input id='inter_number' type='text' maxlength="3" size="3" />
             </div> -->
@@ -243,8 +267,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 時鐘js -->
 
 </body>
 
