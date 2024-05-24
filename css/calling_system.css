@@ -1,0 +1,76 @@
+/* 網頁背景顏色 */
+body {
+    background-color: Azure;
+}
+
+.container {
+    position: relative;
+}
+
+.RedText {
+    color: red;
+}
+
+.PurpleText {
+    color: purple;
+}
+
+.row > .col > button,
+.col-2 > button,
+.col-3 > button {
+    font-weight: 900;
+    font-size: 50px;
+    font-family: "Noto Sans TC", serif;
+}
+
+/* 側邊選單樣式 */
+#ulLeftMenu {
+    float: left;
+    position: absolute;
+    width: 290px;
+    margin-left: 0;
+    display: block;
+    background-color: Azure;
+    transition: margin-left 1s;
+    top: 50%;
+}
+/* 側邊選單按鈕樣式 */
+#btnLeftMenu {
+    position: absolute;
+    top: 50%;
+    height: 75px;
+    border: 0;
+    border-left: 1px solid rgb(23, 32, 43, 0.2);
+    background: #1560bd;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+}
+
+aside ul li {
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    list-style-type: none;
+    text-align: center;
+}
+
+#ulLeftMenu {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+    #ulLeftMenu.hide {
+        opacity: 0;
+    }
+
+/* 時鐘樣式 */
+#clock {
+    white-space: nowrap;
+    font-family: 'Comic Sans MS', sans-serif;
+    font-size: 34px;
+    color: #888;
+    font-weight: bold;
+    text-decoration: none;
+}
