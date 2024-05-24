@@ -10,7 +10,7 @@
 <head>
     <meta charset='utf-8'>
 
-    <title>個別報名_叫號系統</title>
+    <title>團體報名_叫號系統</title>
 
     <!-- <link rel='stylesheet' href='style.css'> -->
 
@@ -206,7 +206,7 @@
             width: 290px;
             margin-left: 0;
             display: block;
-            background-color: Azure;
+            background-color: #6EFFFF;
             transition: margin-left 1s;
             top: 50%;
         }
@@ -263,7 +263,7 @@
         <div class="row">
             <div class="col align-self-center">
                 <h1 class="text-center" style="font-family: 'Noto Sans TC', serif; font-weight: 900; color: #050505; ">
-                    111學年度基北區高級中等學校免試入學報名作業</h1>
+                    113學年度基北區高級中等學校免試入學報名作業</h1>
                 <input id='current_number' type='hidden' class='txt' value='0' readonly='readonly'><!-- 暫存1~6號櫃台當前號碼 -->
                 <input id='current_number2' type='hidden' class='txt' value='1000' readonly='readonly'>
                 <!-- 暫存7~8號櫃台當前號碼 -->
@@ -283,7 +283,7 @@
         </div>
         <br>
         <div class="row justify-content-md-center">
-            <div class="col-2">
+            <div class="col">
                 <div id='t1' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">1</div>號櫃台
@@ -292,7 +292,7 @@
                 <br>
                 <button id='1' class='btn btn-success btn-lg btn-block' onclick='start(1)'>0</button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <div id='t2' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">2</div>號櫃台
@@ -300,7 +300,7 @@
                 </div><br>
                 <button id='2' class='btn btn-primary btn-lg btn-block' onclick='start(2)'>0</button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <div id='t3' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">3</div>號櫃台
@@ -308,62 +308,14 @@
                 </div><br>
                 <button id='3' class='btn btn-success btn-lg btn-block' onclick='start(3)'>0</button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <div id='t4' class="text-center shadow-sm rounded">
                     <strong>
                         <div style="font-size:40px; display:inline;">4</div>號櫃台
                     </strong>
                 </div><br>
                 <button id='4' class='btn btn-primary btn-lg btn-block' onclick='start(4)'>0</button>
-            </div>
-            <div class="col-2">
-                <div id='t5' class="text-center shadow-sm rounded">
-                    <strong>
-                        <div style="font-size:40px; display:inline;">5</div>號櫃台
-                    </strong>
-                </div><br>
-                <button id='5' class='btn btn-success btn-lg btn-block' onclick='start(5)'>0</button>
-            </div>
-            
-        </div>
-        <br><br>
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-2">
-                <div id='t6' class="text-center shadow-sm rounded">
-                    <strong>
-                        <div style="font-size:40px; display:inline;">6</div>號櫃台
-                    </strong>
-                </div><br>
-                <button id='6' class='btn btn-primary btn-lg btn-block' onclick='start(6)'>0</button>
-            </div>
-            <div class="col-2">
-                <div id='t7' class="text-center shadow-sm rounded">
-                    <strong>
-                        <div style="font-size:40px; display:inline;">7</div>號櫃台
-                    </strong>
-                </div><br>
-                <button id='7' class='btn btn-success btn-lg btn-block' onclick='start(7)'>0</button>
-            </div>
-            <div class="col-3"></div>
-            <!-- <div class="col-3">
-                <div id='t7' class="text-center shadow-sm rounded">
-                    <strong>特
-                        <div style="font-size:40px; display:inline;">7</div>號櫃台
-                    </strong>
-                </div><br>
-                <button id='7' class='btn btn-success btn-lg btn-block' style="background-color:#CC7420; color:black;"
-                    onclick='start(7)'>0</button>
-            </div> -->
-            <div class="col-3 ">
-                <div id='t8' class="text-center shadow-sm rounded">
-                    <strong>特
-                        <div style="font-size:40px; display:inline;">8</div>號櫃台
-                    </strong>
-                </div><br>
-                <button id='8' class='btn btn-primary btn-lg btn-block' style="background-color:#CC7420; color:black;"
-                    onclick='start(8)'>0</button>
-            </div>
+            </div>     
         </div>
         <div class="row">
             <div class="col">
@@ -379,7 +331,7 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default"
-                            style="background-color:orange;">緊急插播：號碼</span>
+                            style="background-color:#CC7420; color:white;">緊急插播：號碼</span>
                     </div>
                     <input id='inter_number' type="number" class="form-control"
                         aria-describedby="inputGroup-sizing-default" min="0" max="1000">
@@ -407,23 +359,13 @@
         <div id="ulLeftMenu">
             <ul >
                 <li>
-                    <h3>1~7 起始連號</h3>
+                    <h3>1~4 起始連號</h3>
                 </li>
                 <li>
                     <div class="input-group mb-3">
                         <input id='startBase' type="number" class="form-control"
                             aria-describedby="inputGroup-sizing-default" min="0" max="1000">
                         <input class="btn btn-primary" type="button" value='設定' onclick='setStartNumber(1);' />
-                    </div>
-                </li>
-                <li>
-                    <h3> 8 起始連號</h3>
-                </li>
-                <li>
-                    <div class="input-group mb-3">
-                        <input id='startSpecial' type="number" class="form-control"
-                            aria-describedby="inputGroup-sizing-default" min="0" max="1000">
-                        <input class="btn btn-primary" type="button" value='設定' onclick='setStartNumber(7);' />
                     </div>
                 </li>
             </ul>
