@@ -40,8 +40,8 @@
 
 
         // 一般桌 起始值
-        var startBaseNum = 0;
-        var startSpecialNum = 1000;
+        var startBaseNum = 1;
+        var startSpecialNum = 1;
 
 
         var speechSynthesis = window.speechSynthesis;
@@ -84,17 +84,17 @@
             if (result == true) {
                 document.getElementById("current_state").innerHTML = "尚未開始，請稍等候";
 
-                document.getElementById("current_number").value = startBaseNum.toString();
+                document.getElementById("current_number").value = 0; // startBaseNum.toString();
                 if (showPreNum) {
-                    document.getElementById("current_number2").value = startSpecialNum.toString();
+                    document.getElementById("current_number2").value = 0; // startSpecialNum.toString();
                 }
 
                 var i;
                 for (i = 1; i < 9; i++) {
-                    document.getElementById(i.toString()).innerHTML = startBaseNum.toString();
+                    document.getElementById(i.toString()).innerHTML = 0;
 
                     if (showPreNum) {
-                        document.getElementById(i.toString() + "_pre").innerHTML = startBaseNum.toString();
+                        document.getElementById(i.toString() + "_pre").innerHTML = 0;
                     }
                 }
             }
@@ -109,7 +109,7 @@
                 if (document.getElementById("inter_number")?.value) {
                     current_number = document.getElementById("inter_number").value;
                 } else if (table == 8) {
-                    //7~8號櫃台 號碼另外處理
+                    //7~8號特別櫃台 號碼另外處理
                     document.getElementById("current_number2").value =
                         parseInt(document.getElementById("current_number2").value) + 1;
                     current_number = document.getElementById("current_number2").value;
@@ -118,7 +118,7 @@
                     document.getElementById("current_number").value = current_number;
                 }
 
-                var text = "請" + current_number + "號來賓到" + table + "號櫃台";
+                let text = "請" + current_number + "號來賓到" + table + "號櫃台";
                 document.getElementById("current_state").innerHTML = text;
 
                 // 將之前的號碼寫入
@@ -139,9 +139,8 @@
 
                 document.getElementById("inter_number").value = "";
             }
-            else { // table == 0
-                var current_state =
-                    document.getElementById("current_state").innerHTML;
+            else { // table == 0，表示重新播放
+                let current_state = document.getElementById("current_state").innerHTML;
                 speak(current_state);
             }
         }
@@ -151,17 +150,15 @@
             speechSynthesis.cancel();
         }
 
+        // 設定 個別櫃台 與 特別櫃台 的起始號碼
         function setStartNumber(table) {
             if (table == 1) {
-                // startBaseNum = parseInt(document.getElementById('startBase').value) - 1;
-                document.getElementById("current_number").value =
-                    parseInt(document.getElementById("startBase").value) - 1;
-                document.getElementById("startBase").value = "";
-            } else {
-                // startSpecialNum = parseInt(document.getElementById('startSpecial').value) - 1;
-                document.getElementById("current_number2").value =
-                    parseInt(document.getElementById("startSpecial").value) - 1;
-                document.getElementById("startSpecial").value = "";
+                startBaseNum = parseInt(document.getElementById('startBaseInput').value);
+                document.getElementById("current_number").value = startBaseNum - 1;
+            }
+            else { // table ==7 特別櫃台
+                startSpecialNum = parseInt(document.getElementById('startSpecialInput').value);
+                document.getElementById("current_number2").value = startSpecialNum - 1;
             }
         }
 
@@ -252,9 +249,19 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+            // 初始化 系統標題
             const systemTitleDiv = document.getElementById('systemTitle');
             systemTitleDiv.textContent = systemTitle;
 
+            // 初始化 系統櫃台初始號碼
+            document.getElementById("startBaseInput").value = startBaseNum;
+            setStartNumber(1);
+            if (showSpecialCounterOpen) {
+                document.getElementById("startSpecialInput").value = startSpecialNum;
+                setStartNumber(7);
+            }
+
+            // 初始化 櫃台
             const container = document.getElementById('CounterContainer');
             // 將第一Row櫃台容器插入div區塊
             if (firstRowNumCounters != 0) {
@@ -393,17 +400,18 @@
                             font-weight: 900;
                             color: #050505;
                         "></h1>
+                <!-- 暫存 個別櫃台當前號碼 -->
                 <input id="current_number"
                        type="hidden"
                        class="txt"
                        value="0"
-                       readonly="readonly" /><!-- 暫存個別櫃台當前號碼 -->
+                       readonly="readonly" />
+                <!-- 暫存 特別櫃台(7~8號)當前號碼 -->
                 <input id="current_number2"
                        type="hidden"
                        class="txt"
                        value="1000"
                        readonly="readonly" />
-                <!-- 暫存7~8號櫃台當前號碼 -->
             </div>
         </div>
         <div class="row mt-md-4">
@@ -482,7 +490,7 @@
                 </li>
                 <li>
                     <div class="input-group mb-3">
-                        <input id="startBase"
+                        <input id="startBaseInput"
                                type="number"
                                class="form-control"
                                aria-describedby="inputGroup-sizing-default"
@@ -499,12 +507,12 @@
                 </li>
                 <li>
                     <div class="input-group mb-3">
-                        <input id="startSpecial"
+                        <input id="startSpecialInput"
                                type="number"
                                class="form-control"
                                aria-describedby="inputGroup-sizing-default"
                                min="0"
-                               max="1000" />
+                               max="10000" />
                         <input class="btn btn-primary"
                                type="button"
                                value="設定"
