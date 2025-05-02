@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<!--
+    v2.1
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114學年度新北市立永平高級中學免試入學報名作業</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --special-color: #e74c3c;
+            --bg-color: #f5f7fa;
+            --dark-color: #34495e;
+            --light-color: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .current-number {
+            background-color: var(--dark-color);
+            color: orangered;
+            text-align: center;
+            padding: 1.5rem;
+            font-family: 'Noto Sans TC', serif;
+            font-size: 2.2rem;
+            margin: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 73, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(52, 73, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 73, 94, 0); }
+        }
+        
+        .counters-container {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            flex-grow: 1;
+        }
+        
+        .counter-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+        }
+        
+        .counter {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 10%;
+            min-width: 100px;
+            position: relative;
+        }
+        
+        .counter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .counter-label {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .normal-counter {
+            border-top: 5px solid var(--primary-color);
+            width: 15%;
+        }
+        
+        .special-counter {
+            border-top: 5px solid var(--special-color);
+            width: 20%;
+        }
+        
+        .special-counter .counter-label {
+            color: var(--special-color);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            margin: 0 2rem 1rem;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .emergency-input {
+            padding: 0.8rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            margin: 0 1rem;
+            width: 150px;
+            font-size: 1rem;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+        }
+        
+        .volume-control label {
+            margin-right: 0.5rem;
+        }
+        
+        .clock {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .settings-panel {
+            position: absolute;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            padding: 2rem;
+            transition: left 0.3s ease-in-out;
+            z-index: 100;
+        }
+        
+        .settings-panel.open {
+            left: 0;
+        }
+        
+        .settings-btn {
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            z-index: 101;
+        }
+        
+        .settings-title {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .settings-form div {
+            margin-bottom: 1rem;
+        }
+        
+        .settings-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .settings-form input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>114學年度新北市立永平高級中學免試入學報名作業</header>
+    
+    <div class="current-number" id="currentNumber">
+        當前號碼與櫃台： 請等待叫號
+    </div>
+    
+    <div class="counters-container">
+        <div class="counter-row">
+            <div class="counter normal-counter" data-id="8" data-group="normal">
+                <div class="counter-label">8號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="7" data-group="normal">
+                <div class="counter-label">7號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="6" data-group="normal">
+                <div class="counter-label">6號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="5" data-group="normal">
+                <div class="counter-label">5號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+        </div>
+        
+        <div class="counter-row">
+            <div class="counter normal-counter" data-id="4" data-group="normal">
+                <div class="counter-label">4號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="3" data-group="normal">
+                <div class="counter-label">3號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="2" data-group="normal">
+                <div class="counter-label">2號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+            <div class="counter normal-counter" data-id="1" data-group="normal">
+                <div class="counter-label">1號櫃台</div>
+                <div class="counter-number">0</div>
+            </div>
+        </div>
+        
+        <div class="counter-row">
+            <div class="counter special-counter" data-id="10" data-group="special">
+                <div class="counter-label">10號櫃台</div>
+                <div class="counter-number">0000</div>
+            </div>
+            <div class="counter special-counter" data-id="9" data-group="special">
+                <div class="counter-label">9號櫃台</div>
+                <div class="counter-number">0000</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <input type="number" class="emergency-input" id="emergencyInput" placeholder="緊急插播號碼">
+        <button class="btn" id="replaySpeechBtn">重新播放</button>
+        <button class="btn" id="stopSpeechBtn">停止播放</button>
+        <button class="btn" id="resetBtn">數字歸零</button>
+        <div class="volume-control">
+            <label for="volume">音量：</label>
+            <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+        </div>
+    </div>
+    
+    <div class="clock" id="clock">00:00:00</div>
+    
+    <button class="btn settings-btn" id="settingsBtn">初始設定</button>
+    
+    <div class="settings-panel" id="settingsPanel">
+        <h3 class="settings-title">初始值設定</h3>
+        <div class="settings-form">
+            <div>
+                <label for="normalInitial">1-8號櫃台初始值：</label>
+                <input type="number" id="normalInitial" value="0" min="0">
+            </div>
+            <div>
+                <label for="specialInitial">9-10號櫃台初始值：</label>
+                <input type="number" id="specialInitial" value="1000" min="0">
+            </div>
+            <button class="btn" id="applySettings">套用設定</button>
+        </div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const counters = document.querySelectorAll('.counter');
+        const currentNumber = document.getElementById('currentNumber');
+        const emergencyInput = document.getElementById('emergencyInput');
+        const replaySpeechBtn = document.getElementById('replaySpeechBtn');
+        const stopSpeechBtn = document.getElementById('stopSpeechBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const volumeControl = document.getElementById('volume');
+        const clock = document.getElementById('clock');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const normalInitial = document.getElementById('normalInitial');
+        const specialInitial = document.getElementById('specialInitial');
+        const applySettings = document.getElementById('applySettings');
+        
+        // Global variables
+        let normalCounters = 0;
+        let specialCounters = 1000;
+        let speechInstance = null;
+        let lastMessage = '';
+        
+        // 更新時鐘
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+        // 櫃台點擊事件
+        counters.forEach(counter => {
+            counter.addEventListener('click', () => {
+                const counterId = counter.dataset.id;
+                const group = counter.dataset.group;
+                const counterNumber = counter.querySelector('.counter-number');
+                let currentValue;
+                
+                const emergency = emergencyInput.value.trim();
+                
+                if (emergency !== '') {
+                    // Emergency announcement
+                    counterNumber.textContent = emergency;
+                    announceNumber(emergency, counterId);
+                    emergencyInput.value = '';
+                } else {
+                    // Normal incrementation
+                    if (group === 'normal') {
+                        normalCounters++;
+                        currentValue = normalCounters;
+                    } else {
+                        specialCounters++;
+                        currentValue = specialCounters;
+                    }
+                    counterNumber.textContent = currentValue;
+                    announceNumber(currentValue, counterId);
+                }
+            });
+        });
+        
+        // 取得google 小姐聲音
+        function loadVoices(u) {
+            var voices = speechSynthesis.getVoices();
+            for (let index = 0; index < voices.length; index++) {
+                /*
+                    'Google US English'
+                    'Google 日本語'
+                    'Google 普通话（中国大陆）'
+                    'Google 粤語（香港）'
+                    'Google 國語（臺灣）'
+                    "Microsoft Hanhan - Chinese (Traditional, Taiwan)"
+                */
+                if (voices[index].name == "Google 國語（臺灣）") {
+                    //要使用Google中文語音的話請不要再用u.lang指定語言
+                    //不然可能又會被切回系統預設的中文語音
+                    u.voice = voices[index];
+                    return u;
+                }
+            }
+            //如果沒有則使用預設中文語音
+            u.lang = "zh-TW";
+            return u;
+        }
+
+        // 播放聲音
+        function speak(text) {
+            speechInstance = new window.SpeechSynthesisUtterance(text);
+            speechInstance = loadVoices(speechInstance);
+            speechInstance.volume = volumeControl.value;
+            speechInstance.rate = 1.1;
+            
+            window.speechSynthesis.speak(speechInstance);
+        }
+
+        // 播放聲音
+        function announceNumber(number, counterId) {
+            if (speechInstance) {
+                window.speechSynthesis.cancel();
+            }
+            
+            const message = `請${number}號來賓到${counterId}號櫃台`;
+            currentNumber.textContent = `當前號碼與櫃台： ${message}`;
+            lastMessage = message;
+            
+            speak(message);
+            speak(message);
+        }
+        
+        // 重新播放
+        replaySpeechBtn.addEventListener('click', () => {
+            if (lastMessage) {
+                if (speechInstance) {
+                    window.speechSynthesis.cancel();
+                }
+
+                speak(lastMessage);
+                speak(lastMessage);
+            }
+        });
+        
+        // 取消 聲音播放
+        stopSpeechBtn.addEventListener('click', () => {
+            if (speechInstance) {
+                window.speechSynthesis.cancel();
+            }
+        });
+        
+        // 櫃台號碼全部設為0
+        resetBtn.addEventListener('click', () => {
+            normalCounters = parseInt(normalInitial.value);
+            specialCounters = parseInt(specialInitial.value);
+            
+            counters.forEach(counter => {
+                const group = counter.dataset.group;
+                const counterNumber = counter.querySelector('.counter-number');
+                
+                if (group === 'normal') {
+                    counterNumber.textContent = normalCounters;
+                } else {
+                    counterNumber.textContent = specialCounters;
+                }
+            });
+            
+            currentNumber.textContent = '當前號碼與櫃台： 請等待叫號';
+            lastMessage = '';
+            
+            if (speechInstance) {
+                window.speechSynthesis.cancel();
+            }
+        });
+        
+        // 側邊選單滑動事件
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.toggle('open');
+        });
+        
+        // 設定 個別櫃台 與 特別櫃台 的起始號碼
+        applySettings.addEventListener('click', () => {
+            const normalValue = parseInt(normalInitial.value) - 1;
+            const specialValue = parseInt(specialInitial.value) - 1;
+            
+            normalCounters = normalValue;
+            specialCounters = specialValue;
+            
+            settingsPanel.classList.remove('open');
+        });
+    </script>
+</body>
+</html>

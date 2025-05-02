@@ -11,17 +11,37 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fonts.googleapis.css"> <!-- font style -->
     <link rel="stylesheet" href="css/calling_system.css">
+    <style>
+        .unicode-footstep {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+    animation: footstepFade 2s forwards;
+    z-index: 9999;
+    pointer-events: none;
+}
 
+@keyframes footstepFade {
+    0% { opacity: 0; transform: scale(0.5); }
+    20% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.2); }
+}
+        </style>
     <script type="text/javascript">
         // 常數區
         // 系統標題
         const systemTitle = "113學年度基北區高級中等學校免試入學報名作業";
         // 第一Row櫃台數量
-        const firstRowNumCounters = 5;
+        const firstRowNumCounters = 6;
         // 第二Row櫃台數量
         const secondRowNumCounters = 2;
+        // 第三Row櫃台數量
+        const thirdRowNumCounters = 2;
+        //總共多少櫃台
+        const totalConters = firstRowNumCounters + secondRowNumCounters + thirdRowNumCounters;
         // 是否啟用特別櫃台
-        const showSpecialCounterOpen = true;
+        const showSpecialCounterOpen = false;
         // 是否顯示 當前櫃前 上一號的號碼，在櫃檯的上方
         const showPreNum = false;
 
@@ -114,7 +134,7 @@
 
                 if (document.getElementById("inter_number")?.value) {
                     current_number = document.getElementById("inter_number").value;
-                } else if (table == 8) {
+                } else if (table == 11) {
                     //7~8號特別櫃台 號碼另外處理
                     document.getElementById("current_number2").value =
                         parseInt(document.getElementById("current_number2").value) + 1;
@@ -196,6 +216,7 @@
             const counterDiv = document.createElement('div');
             counterDiv.id = `t${index}`;
             counterDiv.className = 'text-center shadow-sm rounded';
+            counterDiv.classList.add('counter-btn');
             counterDiv.innerHTML = `<strong><div style="font-size: 40px; display: inline">${index}</div>號櫃台</strong>`;
 
             const startBtn = document.createElement('button');
@@ -209,12 +230,16 @@
             startBtn.textContent = '0';
             startBtn.onclick = () => start(index);
 
+
+            // ⭐ 加入腳印觸發事件
+            startBtn.addEventListener("click", function () {
+                showFootstepGuideToElement(this);
+            });
             if (showPreNum) {
                 colDiv.appendChild(preBtn);
             }
 
             colDiv.appendChild(counterDiv);
-            colDiv.appendChild(document.createElement('br'));
             colDiv.appendChild(startBtn);
 
             return colDiv;
@@ -251,7 +276,6 @@
             }
 
             colDiv.appendChild(counterDiv);
-            colDiv.appendChild(document.createElement('br'));
             colDiv.appendChild(startBtn);
 
             return colDiv;
@@ -276,7 +300,7 @@
             if (firstRowNumCounters != 0) {
                 const firstRowConterDiv = document.createElement('div');
                 firstRowConterDiv.className = 'row justify-content-md-center';
-                for (let i = 1; i <= firstRowNumCounters; i++) {
+                for (let i = totalConters; i > totalConters-firstRowNumCounters; i--) {
                     firstRowConterDiv.appendChild(createCounterDiv(i));
                 }
                 container.appendChild(firstRowConterDiv);
@@ -286,10 +310,10 @@
             if (secondRowNumCounters != 0) {
                 // 加入換行
                 container.appendChild(document.createElement('br'));
-                container.appendChild(document.createElement('br'));
 
                 const secondRowConterDiv = document.createElement('div');
                 secondRowConterDiv.className = 'row';
+                secondRowConterDiv.className = 'row justify-content-end';
 
                 if ((firstRowNumCounters % 2) == 1) {
                     let uiCorrectionDiv = document.createElement('div');
@@ -297,7 +321,7 @@
                     secondRowConterDiv.appendChild(uiCorrectionDiv);
                 }
 
-                for (let i = firstRowNumCounters + 1; i <= firstRowNumCounters + secondRowNumCounters; i++) {
+                for (let i = totalConters- firstRowNumCounters; i > totalConters -firstRowNumCounters-secondRowNumCounters; i--) {
                     secondRowConterDiv.appendChild(createCounterDiv(i));
                 }
 
@@ -311,7 +335,60 @@
 
                 container.appendChild(secondRowConterDiv);
             }
+            
+
+            // 如果有第三Row櫃台設定 也進行設定
+            if (thirdRowNumCounters != 0) {
+                // 加入換行
+                container.appendChild(document.createElement('br'));
+
+                const thirdRowConterDiv = document.createElement('div');
+                thirdRowConterDiv.className = 'row';
+                thirdRowConterDiv.className = 'row justify-content-end';
+
+                if ((firstRowNumCounters % 2) == 1) {
+                    let uiCorrectionDiv = document.createElement('div');
+                    uiCorrectionDiv.className = "col-1";
+                    thirdRowConterDiv.appendChild(uiCorrectionDiv);
+                }
+
+                for (let i = totalConters- firstRowNumCounters-secondRowNumCounters; i >= totalConters -firstRowNumCounters-secondRowNumCounters-1; i--) {
+                    thirdRowConterDiv.appendChild(createCounterDiv(i));
+                }
+                container.appendChild(thirdRowConterDiv);
+            }
         });
+        //腳印產生函式
+        function showFootstepGuideToElement(targetElement) {
+            if (!targetElement) return;
+
+            const startX = window.innerWidth/3;
+            const startY = window.innerHeight - 250;
+
+            const rect = targetElement.getBoundingClientRect();
+            const endX = rect.left + rect.width / 2;
+            const endY = rect.top + rect.height / 2;
+
+            const steps = 12;
+
+            for (let i = 0; i <= steps; i++) {
+                const x = startX + (endX - startX) * (i / steps);
+                const y = startY + (endY - startY) * (i / steps);
+
+                const step = document.createElement("div");
+                step.className = "unicode-footstep";
+                step.textContent = "👣";
+                step.style.left = `${x}px`;
+                step.style.top = `${y}px`;
+                step.style.animationDelay = `${i * 0.15}s`;
+
+                document.body.appendChild(step);
+
+                setTimeout(() => {
+                    step.remove();
+                }, 3000);
+            }
+        }
     </script>
 </head>
 
@@ -356,12 +433,9 @@
                 <div id="clock"></div>
             </div>
         </div>
-        <br />
-
         <div id="CounterContainer"></div>
 
-        <br /><br /><br />
-        <div class="col-4">
+        <div class="col-4" style="margin-top:-5%;">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"
@@ -391,14 +465,14 @@
                        value="數字歸零"
                        onclick="setZero();" />
             </div>
-            <div class="col">
+            <div class="col" style="margin-left:-50%;">
                 音量大小：<input id="volume"
                             type="range"
                             min="0"
                             max="1"
                             step="0.01"
                             value="0.9"
-                            style="width: 400px" />
+                            style="width: 350px" />
             </div>
         </div>
     </div>
