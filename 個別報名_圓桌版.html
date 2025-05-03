@@ -1,0 +1,1118 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>114學年度新北市立永平高級中學免試入學報名作業</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --special-color: #e74c3c;
+            --bg-color: #f5f7fa;
+            --dark-color: #34495e;
+            --light-color: #ecf0f1;
+            --font-main: 'Noto Sans TC', sans-serif;
+            --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+        }
+
+        .title-area {
+            padding: 1rem;
+            text-align: center;
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 10;
+        }
+
+        #clock {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .circle-area,
+        .control-area {
+            flex: 1;
+            padding: 1.5rem;
+            min-width: 320px;
+        }
+
+        .circle-area {
+            align-self: center;
+        }
+
+        .container-circle {
+            max-width: 650px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: #fff;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .counter-section {
+            position: absolute;
+            border: 2px dashed #0cc;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .counter-section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            z-index: 5;
+        }
+
+        .counter-row {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .counter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            text-align: center;
+        }
+
+        .counter-icon {
+            width: clamp(2rem, 2.5vw, 2.5rem);
+            height: clamp(2rem, 2.5vw, 2.5rem);
+            border: 1px solid #000;
+            border-radius: 0.25rem;
+            font-weight: bold;
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .counter-label {
+            font-size: clamp(0.8rem, 1vw, 1rem);
+            font-weight: bold;
+        }
+
+        .status-display {
+            font-size: clamp(1rem, 1.1vw, 1.2rem);
+            text-align: center;
+            word-break: break-word;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-area {
+            background: #f0f0f0;
+            border-left: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .control-display {
+            background: #fff;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        .counters-container {
+            background: #fff;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .counters-container .counter-row {
+            margin-bottom: 1rem;
+        }
+
+        .counters-container .counter-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .counters-container .counter {
+            flex: 1;
+            border-top: 5px solid var(--primary-color);
+            padding: 0.75rem 0.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .counters-container .counter:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .counters-container .counter:active {
+            transform: translateY(1px);
+        }
+
+        .counters-container .counter-label {
+            margin-bottom: 0.5rem;
+        }
+
+        .counters-container .counter-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .special-counter {
+            border-top-color: var(--special-color) !important;
+        }
+
+        .special-counter .counter-label {
+            color: var(--special-color);
+        }
+
+        .emergency-section,
+        .control-buttons {
+            background: #fff;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .emergency-title {
+            color: #cc0000;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .input-group label {
+            flex: 0 0 4rem;
+        }
+
+        input[type="number"] {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+        }
+
+        .emergency-button {
+            background: var(--special-color);
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .emergency-button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .emergency-button:active {
+            transform: translateY(1px);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: none;
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .control-btn:active {
+            transform: translateY(1px);
+        }
+
+        .volume-control {
+            margin-top: 1rem;
+        }
+
+        .volume-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 0.5rem;
+            border-radius: 0.25rem;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: #2980b9;
+        }
+
+        .leftMenu {
+            position: fixed;
+            top: 20%;
+            left: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        #settingsBtn {
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 0.5rem 0.5rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        #settingsBtn:hover {
+            background: #2980b9;
+            transform: translateX(3px);
+        }
+
+        .settings-panel {
+            display: none;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 1.25rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            width: 250px;
+        }
+
+        .settings-panel.open {
+            display: block;
+        }
+
+        .settings-title {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .settings-form div {
+            margin-bottom: 1rem;
+        }
+
+        .settings-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        #applySettings {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        #applySettings:hover {
+            background: #2980b9;
+        }
+
+        /* 櫃台定位樣式 */
+        .section-top-left {
+            top: 20%;
+            left: 20%;
+            width: 15%;
+            height: 18%;
+        }
+
+        .section-top-middle {
+            top: 20%;
+            left: 35%;
+            width: 15%;
+            height: 18%;
+        }
+
+        .section-top-right {
+            top: 20%;
+            left: 50%;
+            width: 15%;
+            height: 18%;
+        }
+
+        .section-middle-right {
+            top: 30%;
+            left: 73%;
+            width: 15%;
+            height: 18%;
+            transform: rotate(60deg);
+        }
+
+        .section-bottom-right {
+            bottom: 20%;
+            left: 73%;
+            width: 15%;
+            height: 18%;
+            transform: rotate(110deg);
+        }
+
+        .section-bottom {
+            bottom: 35%;
+            left: 25%;
+            width: 33%;
+            height: 13%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 響應式布局 */
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .circle-area,
+            .control-area {
+                width: 100%;
+            }
+
+            .container-circle {
+                max-width: 550px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container-circle {
+                max-width: 500px;
+            }
+
+            .counter-icon {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+
+            .counter-label {
+                font-size: 0.9rem;
+            }
+
+            .counters-container .counter-row {
+                flex-wrap: wrap;
+            }
+
+            .counters-container .counter {
+                min-width: calc(50% - 0.5rem);
+                margin-bottom: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container-circle {
+                max-width: 380px;
+            }
+
+            .counters-container .counter {
+                min-width: 100%;
+            }
+
+            #clock {
+                top: 0.5rem;
+                right: 0.5rem;
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .section-bottom {
+                width: 50%;
+                left: 25%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-circle {
+                max-width: 320px;
+            }
+
+            .counter-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .counter-label {
+                font-size: 0.8rem;
+            }
+
+            .status-display {
+                font-size: 0.9rem;
+                padding: 0.3rem;
+            }
+
+            .emergency-title {
+                font-size: 0.9rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-group label {
+                flex: auto;
+            }
+
+            .settings-panel {
+                width: 200px;
+                padding: 1rem;
+            }
+
+            .section-top-left,
+            .section-top-middle,
+            .section-top-right,
+            .section-middle-right,
+            .section-bottom-right {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="title-area">
+        <h1 id="systemTitle">114學年度新北市立永平高級中學免試入學報名作業</h1>
+        <div id="clock"></div>
+    </header>
+    <div class="main-container">
+        <div class="circle-area">
+            <div class="container-circle">
+                <!-- 櫃檯8,9,10 -->
+                <div class="counter-section section-top-left">
+                    <div class="counter-row">
+                        <div class="counter">
+                            <div class="counter-icon" data-id="10">0</div>
+                            <div class="counter-label">10</div>
+                        </div>
+                        <div class="counter">
+                            <div class="counter-icon" data-id="9">0</div>
+                            <div class="counter-label">9</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 櫃檯7,8 -->
+                <div class="counter-section section-top-middle">
+                    <div class="counter-row">
+                        <div class="counter">
+                            <div class="counter-icon" data-id="8">0</div>
+                            <div class="counter-label">8</div>
+                        </div>
+                        <div class="counter">
+                            <div class="counter-icon" data-id="7">0</div>
+                            <div class="counter-label">7</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 櫃檯5,6 -->
+                <div class="counter-section section-top-right">
+                    <div class="counter-row">
+                        <div class="counter">
+                            <div class="counter-icon" data-id="6">0</div>
+                            <div class="counter-label">6</div>
+                        </div>
+                        <div class="counter">
+                            <div class="counter-icon" data-id="5">0</div>
+                            <div class="counter-label">5</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 櫃檯3,4 -->
+                <div class="counter-section section-middle-right">
+                    <div class="counter-row">
+                        <div class="counter">
+                            <div class="counter-icon" data-id="4">0</div>
+                            <div class="counter-label">4</div>
+                        </div>
+                        <div class="counter">
+                            <div class="counter-icon" data-id="3">0</div>
+                            <div class="counter-label">3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 櫃檯1,2 -->
+                <div class="counter-section section-bottom-right">
+                    <div class="counter-row">
+                        <div class="counter">
+                            <div class="counter-icon" data-id="2">0</div>
+                            <div class="counter-label">2</div>
+                        </div>
+                        <div class="counter">
+                            <div class="counter-icon" data-id="1">0</div>
+                            <div class="counter-label">1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部空白區 -->
+                <div class="counter-section section-bottom">
+                    <div class="status-display" id="circleStatus">
+                        尚未開始，請稍等候
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-area">
+            <div class="control-display">
+                <div>當前號碼與櫃台：</div>
+                <div class="status-display pulse-animation" id="controlStatus">
+                    尚未開始，請稍等候
+                </div>
+            </div>
+
+            <div class="counters-container">
+                <div class="counter-row">
+                    <div class="counter normal-counter" data-id="1" data-group="normal">
+                        <div class="counter-label">1號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="2" data-group="normal">
+                        <div class="counter-label">2號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="3" data-group="normal">
+                        <div class="counter-label">3號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="4" data-group="normal">
+                        <div class="counter-label">4號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                </div>
+                <div class="counter-row">
+                    <div class="counter normal-counter" data-id="5" data-group="normal">
+                        <div class="counter-label">5號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="6" data-group="normal">
+                        <div class="counter-label">6號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="7" data-group="normal">
+                        <div class="counter-label">7號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                    <div class="counter normal-counter" data-id="8" data-group="normal">
+                        <div class="counter-label">8號櫃台</div>
+                        <div class="counter-number">0</div>
+                    </div>
+                </div>
+                <div class="counter-row">
+                    <div class="counter special-counter" data-id="9" data-group="special">
+                        <div class="counter-label">9號櫃台</div>
+                        <div class="counter-number">0000</div>
+                    </div>
+                    <div class="counter special-counter" data-id="10" data-group="special">
+                        <div class="counter-label">10號櫃台</div>
+                        <div class="counter-number">0000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 緊急插播區域 -->
+            <div class="emergency-section">
+                <div class="emergency-title">
+                    <i class="fas fa-exclamation-triangle"></i> 緊急插播
+                </div>
+                <div class="input-group">
+                    <label for="emergencyInput">號碼：</label>
+                    <input id="emergencyInput" type="number" min="0" max="9999" placeholder="輸入號碼..." />
+                </div>
+            </div>
+
+            <!-- 控制按鈕 -->
+            <div class="control-buttons">
+                <div class="button-group">
+                    <button id="replaySpeechBtn" class="control-btn">
+                        <i class="fas fa-redo"></i> 重新播放
+                    </button>
+                    <button id="stopSpeechBtn" class="control-btn">
+                        <i class="fas fa-stop"></i> 停止播放
+                    </button>
+                    <button id="resetBtn" class="control-btn">
+                        <i class="fas fa-sync-alt"></i> 數字歸零
+                    </button>
+                </div>
+                <div class="volume-control">
+                    <label for="volume" class="volume-label">音量大小：</label>
+                    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.9" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 側邊選單 -->
+    <aside class="leftMenu" id="asideId">
+        <button id="settingsBtn"><i class="fas fa-cog"></i></button>
+        <div class="settings-panel" id="settingsPanel">
+            <h3 class="settings-title">初始值設定</h3>
+            <div class="settings-form">
+                <div>
+                    <label for="normalInitial">1-8號櫃台初始值：</label>
+                    <input type="number" id="normalInitial" value="0" min="0">
+                </div>
+                <div>
+                    <label for="specialInitial">9-10號櫃台初始值：</label>
+                    <input type="number" id="specialInitial" value="1000" min="0">
+                </div>
+                <button id="applySettings">套用設定</button>
+            </div>
+        </div>
+    </aside>
+
+    <script type="text/javascript">
+        (() => {
+            // DOM 元素快取
+            const elements = {
+                circleStatus: document.getElementById('circleStatus'),
+                controlStatus: document.getElementById('controlStatus'),
+                emergencyInput: document.getElementById('emergencyInput'),
+                volumeControl: document.getElementById('volume'),
+                clock: document.getElementById('clock'),
+                settingsPanel: document.getElementById('settingsPanel'),
+                normalInitial: document.getElementById('normalInitial'),
+                specialInitial: document.getElementById('specialInitial'),
+                settingsBtn: document.getElementById('settingsBtn'),
+                replaySpeechBtn: document.getElementById('replaySpeechBtn'),
+                stopSpeechBtn: document.getElementById('stopSpeechBtn'),
+                resetBtn: document.getElementById('resetBtn'),
+                applySettings: document.getElementById('applySettings'),
+                countersContainer: document.querySelector('.counters-container'),
+                counterIcons: document.querySelectorAll('.counter-icon'),
+                normalCounters: document.querySelectorAll('.counter[data-group="normal"] .counter-number'),
+                specialCounters: document.querySelectorAll('.counter[data-group="special"] .counter-number')
+            };
+
+            // 應用狀態管理
+            const appState = {
+                normalCount: parseInt(elements.normalInitial.value) || 0,
+                specialCount: parseInt(elements.specialInitial.value) || 1000,
+                speechSynthesisInstance: null,
+                lastMessage: '',
+                speechQueue: [],
+                isSpeaking: false
+            };
+
+            // 語音合成管理器
+            const speechManager = {
+                // 載入語音引擎
+                init: function () {
+                    // 預加載語音引擎
+                    if ('speechSynthesis' in window) {
+                        speechSynthesis.getVoices();
+                    }
+                },
+
+                // 取得最適合的語音
+                getVoice: function () {
+                    const voices = speechSynthesis.getVoices();
+                    // 嘗試找到中文台灣語音
+                    return voices.find(v =>
+                        v.name.includes("Google 國語") ||
+                        v.name.includes("Taiwan") ||
+                        v.lang === "zh-TW"
+                    ) || null;
+                },
+
+                // 播放語音
+                speak: function (text) {
+                    if (!text) return;
+
+                    // 將語音加入佇列
+                    appState.speechQueue.push(text);
+
+                    // 如果沒有語音播放中，開始處理佇列
+                    if (!appState.isSpeaking) {
+                        this.processSpeechQueue();
+                    }
+                },
+
+                // 處理語音佇列
+                processSpeechQueue: function () {
+                    if (appState.speechQueue.length === 0) {
+                        appState.isSpeaking = false;
+                        return;
+                    }
+
+                    appState.isSpeaking = true;
+                    const text = appState.speechQueue.shift();
+
+                    // 停止先前的語音
+                    this.stop();
+
+                    // 創建新的語音實例
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    const voice = this.getVoice();
+
+                    if (voice) {
+                        utterance.voice = voice;
+                    } else {
+                        utterance.lang = "zh-TW";
+                    }
+
+                    utterance.volume = parseFloat(elements.volumeControl.value);
+                    utterance.rate = 1.1;
+                    appState.speechSynthesisInstance = utterance;
+
+                    // 語音結束時處理下一個佇列項目
+                    utterance.onend = () => {
+                        setTimeout(() => this.processSpeechQueue(), 300);
+                    };
+
+                    // 語音錯誤時也繼續處理佇列
+                    utterance.onerror = () => {
+                        console.error("Speech synthesis error");
+                        setTimeout(() => this.processSpeechQueue(), 300);
+                    };
+
+                    speechSynthesis.speak(utterance);
+                },
+
+                // 重播最後的語音
+                replay: function () {
+                    if (appState.lastMessage) {
+                        this.speak(appState.lastMessage);
+                    }
+                },
+
+                // 停止語音
+                stop: function () {
+                    if ('speechSynthesis' in window) {
+                        speechSynthesis.cancel();
+                        appState.speechSynthesisInstance = null;
+                    }
+                }
+            };
+
+            // UI 更新管理器
+            const uiManager = {
+                // 更新顯示狀態
+                updateStatusDisplay: function (message) {
+                    if (!message) return;
+
+                    elements.circleStatus.textContent = message;
+                    elements.controlStatus.textContent = message;
+                    appState.lastMessage = message;
+                },
+
+                // 更新櫃台顯示數字
+                updateCounterDisplay: function (counterId, number) {
+                    // 更新圓圈上的數字
+                    const counterIcon = document.querySelector(`.counter-icon[data-id="${counterId}"]`);
+                    if (counterIcon) {
+                        counterIcon.textContent = number;
+                    }
+
+                    // 更新控制區域的數字
+                    const counterDisplay = document.querySelector(`.counter[data-id="${counterId}"] .counter-number`);
+                    if (counterDisplay) {
+                        counterDisplay.textContent = number;
+                    }
+                },
+
+                // 重置所有顯示
+                resetAllDisplays: function () {
+                    // 重置櫃台顯示
+                    elements.counterIcons.forEach(icon => {
+                        const id = parseInt(icon.dataset.id);
+                        const isSpecial = id > 8;
+                        icon.textContent = isSpecial ? appState.specialCount : appState.normalCount;
+                    });
+
+                    // 重置控制區域顯示
+                    elements.normalCounters.forEach(counter => {
+                        counter.textContent = appState.normalCount;
+                    });
+
+                    elements.specialCounters.forEach(counter => {
+                        counter.textContent = appState.specialCount;
+                    });
+
+                    // 重置狀態顯示
+                    this.updateStatusDisplay('請等待叫號');
+                },
+
+                // 更新時鐘
+                updateClock: function () {
+                    const now = new Date();
+                    elements.clock.textContent = now.toLocaleTimeString('zh-TW', { hour12: false });
+                }
+            };
+
+            // 事件處理器
+            const eventHandlers = {
+                // 公告號碼與櫃台
+                announce: function (num, counterId) {
+                    const message = `請${num}號來賓到${counterId}號櫃台`;
+                    uiManager.updateStatusDisplay(message);
+                    speechManager.speak(message);
+                },
+
+                // 櫃台點擊處理
+                handleCounterClick: function (event) {
+                    const target = event.target.closest('.counter');
+                    if (!target) return;
+
+                    const counterId = parseInt(target.dataset.id);
+                    const group = target.dataset.group;
+
+                    // 檢查是否有緊急號碼
+                    const emergencyValue = elements.emergencyInput.value.trim();
+                    let newValue;
+
+                    if (emergencyValue !== "") {
+                        newValue = parseInt(emergencyValue);
+                    } else {
+                        // 根據櫃台類型增加號碼
+                        if (group === 'normal') {
+                            newValue = ++appState.normalCount;
+                        } else {
+                            newValue = ++appState.specialCount;
+                        }
+                    }
+
+                    // 更新顯示
+                    uiManager.updateCounterDisplay(counterId, newValue);
+
+                    // 公告
+                    this.announce(newValue, counterId);
+
+                    // 清空緊急號碼輸入
+                    elements.emergencyInput.value = '';
+                },
+
+                // 重置按鈕點擊
+                handleResetClick: function () {
+                    // 從設定獲取初始值
+                    appState.normalCount = parseInt(elements.normalInitial.value) || 0;
+                    appState.specialCount = parseInt(elements.specialInitial.value) || 1000;
+
+                    // 重置顯示
+                    uiManager.resetAllDisplays();
+
+                    // 停止語音
+                    speechManager.stop();
+                    appState.speechQueue = [];
+                },
+
+                // 設定應用按鈕點擊
+                handleApplySettings: function () {
+                    // 設定值比實際值少1，因為下一次叫號會+1
+                    appState.normalCount = parseInt(elements.normalInitial.value) - 1 || 0;
+                    appState.specialCount = parseInt(elements.specialInitial.value) - 1 || 1000;
+
+                    // 關閉設定面板
+                    elements.settingsPanel.classList.remove('open');
+                },
+
+                // 設定面板開關按鈕點擊
+                handleSettingsToggle: function () {
+                    elements.settingsPanel.classList.toggle('open');
+                }
+            };
+
+            // 初始化應用
+            const initApp = () => {
+                // 初始化語音合成
+                speechManager.init();
+
+                // 設定時鐘更新
+                setInterval(uiManager.updateClock, 1000);
+                uiManager.updateClock();
+
+                // 綁定事件處理
+                elements.countersContainer.addEventListener('click', event =>
+                    eventHandlers.handleCounterClick(event));
+
+                elements.replaySpeechBtn.addEventListener('click', () =>
+                    speechManager.replay());
+
+                elements.stopSpeechBtn.addEventListener('click', () =>
+                    speechManager.stop());
+
+                elements.resetBtn.addEventListener('click', () =>
+                    eventHandlers.handleResetClick());
+
+                elements.settingsBtn.addEventListener('click', () =>
+                    eventHandlers.handleSettingsToggle());
+
+                elements.applySettings.addEventListener('click', () =>
+                    eventHandlers.handleApplySettings());
+
+                // 初始化 UI 狀態
+                uiManager.resetAllDisplays();
+            };
+
+            // 頁面加載後初始化應用
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+        })();
+    </script>
+</body>
+</html>
